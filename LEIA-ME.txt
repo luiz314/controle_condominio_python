@@ -1,5 +1,5 @@
 usuário do banco postgres:
-condomínio
+condominio
 123456
 
 usuário do sistema:
