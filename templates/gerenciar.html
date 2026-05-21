@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Gerenciar Registros</h4>
+    <a href="/dashboard" class="btn btn-outline-secondary btn-sm">Voltar</a>
+</div>
+
+<div class="row g-4">
+
+    <!-- USUÁRIOS -->
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5>Usuários</h5>
+
+                {% for u in usuarios %}
+                <form method="post"
+                      action="/update_usuario/{{ u[0] }}"
+                      class="mt-2 d-flex gap-2 align-items-center">
+
+                    <input type="text"
+                           class="form-control"
+                           name="username"
+                           value="{{ u[1] }}"
+                           required>
+
+                    <button type="submit" class="btn btn-success btn-sm">
+                        Salvar
+                    </button>
+
+                    <a href="/delete_usuario/{{ u[0] }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Excluir usuário?')">
+                        X
+                    </a>
+                </form>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- PESSOAS -->
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5>Pessoas</h5>
+
+                <!-- 🔍 BUSCA -->
+                <input type="text"
+                       id="busca"
+                       class="form-control mb-3"
+                       placeholder="Buscar pessoa..."
+                       onkeyup="filtrarPessoas()">
+
+                <div id="lista-pessoas">
+
+                    {% for p in pessoas %}
+                    <form method="post"
+                          action="/update_pessoa/{{ p[0] }}"
+                          class="pessoa-item mt-3"
+                          data-nome="{{ p[1]|lower }}">
+
+                        <!-- VISUAL -->
+                        <div id="view-{{ p[0] }}"
+                             class="d-flex justify-content-between align-items-center">
+
+                            <strong>{{ p[1] }}</strong>
+
+                            <div class="d-flex gap-2">
+                                <button type="button"
+                                        class="btn btn-primary btn-sm"
+                                        onclick="toggleEdit({{ p[0] }})">
+                                    Editar
+                                </button>
+
+                                <a href="/delete_pessoa/{{ p[0] }}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Excluir pessoa?')">
+                                    Excluir
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- EDIÇÃO -->
+                        <div id="edit-{{ p[0] }}"
+                             style="display: none;"
+                             class="mt-2">
+
+                            <input type="text"
+                                   class="form-control mb-1"
+                                   name="nome"
+                                   value="{{ p[1] }}"
+                                   required>
+
+                            <label class="small text-muted">Documento</label>
+                            <input type="text"
+                                   class="form-control mb-1"
+                                   name="documento"
+                                   value="{{ p[2] or '' }}">
+
+                            <label class="small text-muted">Telefone</label>
+                            <input type="text"
+                                   class="form-control mb-2"
+                                   name="telefone"
+                                   value="{{ p[3] or '' }}">
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Salvar
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-secondary btn-sm"
+                                        onclick="toggleEdit({{ p[0] }})">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function toggleEdit(id) {
+    const view = document.getElementById("view-" + id);
+    const edit = document.getElementById("edit-" + id);
+
+    if (edit.style.display === "none") {
+        edit.style.display = "block";
+        view.style.display = "none";
+    } else {
+        edit.style.display = "none";
+        view.style.display = "flex";
+    }
+}
+
+function filtrarPessoas() {
+    const input = document.getElementById("busca").value.toLowerCase();
+    const items = document.querySelectorAll(".pessoa-item");
+
+    items.forEach(item => {
+        const nome = item.getAttribute("data-nome") || "";
+
+        item.style.display = nome.includes(input) ? "block" : "none";
+    });
+}
+</script>
+
+{% endblock %}

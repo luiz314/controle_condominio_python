@@ -1,0 +1,17 @@
+usuário do banco postgres:
+condomínio
+123456
+
+usuário do sistema:
+admin
+123456
+
+conectar o ssh pelo cmd:
+ssh luiz@192.168.1.34
+123456
+
+subir app servidor na VM:
+
+cd /home/luiz/controle-condominio
+source venv/bin/activate
+python app.py

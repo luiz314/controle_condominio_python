@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.dashboard-card {
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.dashboard-card .icon {
+    font-size: 28px;
+}
+
+.card-body h6 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Painel do Sistema</h4>
+    <div>
+        <span class="text-muted me-3">Logado como: {{ session['user'] }}</span>
+        <a href="/logout" class="btn btn-outline-danger btn-sm">Sair</a>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <!-- Cadastrar Pessoa -->
+    <div class="col-md-3">
+        <div class="card dashboard-card text-center">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <div class="icon mb-2">👤</div>
+                <h6>Cadastrar Pessoa</h6>
+                <a href="/cadastrar" class="btn btn-success btn-sm mt-2">Abrir</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listar Pessoas -->
+    <div class="col-md-3">
+        <div class="card dashboard-card text-center">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <div class="icon mb-2">📋</div>
+                <h6>Listar Pessoas</h6>
+                <a href="/listar" class="btn btn-primary btn-sm mt-2">Abrir</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cadastrar Usuário -->
+    <div class="col-md-3">
+        <div class="card dashboard-card text-center">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <div class="icon mb-2">👨‍💻</div>
+                <h6>Cadastrar Usuário</h6>
+                <a href="/register" class="btn btn-secondary btn-sm mt-2">Abrir</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backup -->
+    <div class="col-md-3">
+        <div class="card dashboard-card text-center">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <div class="icon mb-2">💾</div>
+                <h6>Backup</h6>
+                <a href="/backup" class="btn btn-warning btn-sm mt-2">Gerenciar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gerenciar (centralizado na linha de baixo) -->
+    <div class="col-md-3 mx-auto">
+        <div class="card dashboard-card text-center">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <div class="icon mb-2">⚙️</div>
+                <h6>Gerenciar</h6>
+                <a href="/gerenciar" class="btn btn-danger btn-sm mt-2">Abrir</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h4>Pessoas</h4>
+
+<form method="GET" class="mb-3">
+  <div class="input-group">
+    <input name="busca" value="{{busca}}" class="form-control" placeholder="Buscar nome">
+    <button class="btn btn-primary">Buscar</button>
+  </div>
+</form>
+
+<table class="table table-hover shadow">
+
+  <tr class="table-dark">
+    <th>Nome</th>
+    <th>Documento</th>
+    <th>Status</th>
+    <th>Ação</th>
+  </tr>
+
+  {% for p in pessoas %}
+  <tr>
+    <td>{{p[1]}}</td>
+    <td>{{p[2]}}</td>
+
+    <td>
+      {% if p[3] %}
+        <span class="text-success">● Dentro</span>
+      {% else %}
+        <span class="text-secondary">● Fora</span>
+      {% endif %}
+    </td>
+
+    <td>
+      {% if p[3] %}
+        <a href="/saida/{{p[0]}}" class="btn btn-danger btn-sm">Registrar Saída</a>
+      {% else %}
+        <a href="/entrada/{{p[0]}}" class="btn btn-success btn-sm">Registrar Entrada</a>
+      {% endif %}
+    </td>
+
+  </tr>
+  {% endfor %}
+
+</table>
+
+{% endblock %}
