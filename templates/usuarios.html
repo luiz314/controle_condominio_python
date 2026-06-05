@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta charset="UTF-8"><title>Usuários</title></head>
+<body>
+  <h2>Gerenciar Usuários</h2>
+  <a href="/usuarios/novo">+ Novo Usuário</a> | <a href="/dashboard">← Dashboard</a>
+  <br><br>
+  <table border="1" cellpadding="6">
+    <tr><th>ID</th><th>Username</th><th>Ações</th></tr>
+    {% for u in usuarios %}
+    <tr>
+      <td>{{ u[0] }}</td>
+      <td>{{ u[1] }}</td>
+      <td>
+        <a href="/usuarios/editar/{{ u[0] }}">Editar</a>
+        &nbsp;
+        <form method="POST" action="/usuarios/excluir/{{ u[0] }}" style="display:inline"
+              onsubmit="return confirm('Confirmar exclusão?')">
+          <button type="submit">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

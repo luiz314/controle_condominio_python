@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"><title>Logs do Sistema</title>
+  <style>
+    body { font-family: monospace; }
+    .linha { padding: 2px 6px; }
+    .linha:nth-child(even) { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>Logs do Sistema (últimas 200 entradas)</h2>
+  <a href="/dashboard">← Dashboard</a>
+  <br><br>
+  {% if linhas %}
+    {% for linha in linhas | reverse %}
+      <div class="linha">{{ linha }}</div>
+    {% endfor %}
+  {% else %}
+    <p>Nenhum log encontrado.</p>
+  {% endif %}
+</body>
+</html>

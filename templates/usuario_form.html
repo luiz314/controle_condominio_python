@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta charset="UTF-8"><title>{{ acao }}</title></head>
+<body>
+  <h2>{{ acao }}</h2>
+  <a href="/usuarios">← Voltar</a>
+  <br><br>
+  {% if erro %}
+    <p style="color:red;">{{ erro }}</p>
+  {% endif %}
+
+  <form method="POST">
+    <label>Username:<br>
+      <input type="text" name="username" value="{{ username or '' }}" required>
+    </label><br><br>
+
+    <label>Senha {% if uid %}(deixe em branco para manter a atual){% endif %}:<br>
+      <input type="password" name="password" {% if not uid %}required{% endif %}>
+    </label><br>
+    <small>
+      Mínimo 10 caracteres, com maiúscula, número e caractere especial.
+    </small><br><br>
+
+    <button type="submit">Salvar</button>
+  </form>
+</body>
+</html>
