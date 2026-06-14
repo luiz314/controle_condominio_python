@@ -1,27 +1,66 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head><meta charset="UTF-8"><title>{{ acao }}</title></head>
-<body>
-  <h2>{{ acao }}</h2>
-  <a href="/usuarios">← Voltar</a>
-  <br><br>
-  {% if erro %}
-    <p style="color:red;">{{ erro }}</p>
-  {% endif %}
+{% extends "base.html" %}
+{% block content %}
 
-  <form method="POST">
-    <label>Username:<br>
-      <input type="text" name="username" value="{{ username or '' }}" required>
-    </label><br><br>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>👤 {{ acao }}</h4>
+    <a href="/usuarios" class="btn btn-outline-secondary">
+        Voltar
+    </a>
+</div>
 
-    <label>Senha {% if uid %}(deixe em branco para manter a atual){% endif %}:<br>
-      <input type="password" name="password" {% if not uid %}required{% endif %}>
-    </label><br>
-    <small>
-      Mínimo 10 caracteres, com maiúscula, número e caractere especial.
-    </small><br><br>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
 
-    <button type="submit">Salvar</button>
-  </form>
-</body>
-</html>
+                {% if erro %}
+                <div class="alert alert-danger">
+                    {{ erro }}
+                </div>
+                {% endif %}
+
+                <form method="POST">
+
+                    <div class="mb-3">
+                        <label class="form-label">Usuário</label>
+                        <input type="text"
+                               class="form-control"
+                               name="username"
+                               value="{{ username or '' }}"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Senha {% if uid %}(deixe em branco para manter a atual){% endif %}
+                        </label>
+
+                        <input type="password"
+                               class="form-control"
+                               name="password"
+                               {% if not uid %}required{% endif %}>
+
+                        <div class="form-text">
+                            Mínimo 10 caracteres, contendo letra maiúscula,
+                            número e caractere especial.
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="/usuarios" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn btn-primary">
+                            Salvar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

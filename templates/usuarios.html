@@ -1,26 +1,51 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head><meta charset="UTF-8"><title>Usuários</title></head>
-<body>
-  <h2>Gerenciar Usuários</h2>
-  <a href="/usuarios/novo">+ Novo Usuário</a> | <a href="/dashboard">← Dashboard</a>
-  <br><br>
-  <table border="1" cellpadding="6">
-    <tr><th>ID</th><th>Username</th><th>Ações</th></tr>
-    {% for u in usuarios %}
-    <tr>
-      <td>{{ u[0] }}</td>
-      <td>{{ u[1] }}</td>
-      <td>
-        <a href="/usuarios/editar/{{ u[0] }}">Editar</a>
-        &nbsp;
-        <form method="POST" action="/usuarios/excluir/{{ u[0] }}" style="display:inline"
-              onsubmit="return confirm('Confirmar exclusão?')">
-          <button type="submit">Excluir</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>👨‍💻 Gerenciar Usuários</h4>
+    <div>
+        <a href="/usuarios/novo" class="btn btn-success">
+            + Novo Usuário
+        </a>
+        <a href="/dashboard" class="btn btn-outline-secondary">
+            Voltar
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Usuário</th>
+                    <th width="180">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>{{ u[0] }}</td>
+                    <td>{{ u[1] }}</td>
+                    <td>
+                        <a href="/usuarios/editar/{{ u[0] }}" class="btn btn-primary btn-sm">Editar</a>
+
+                        <form method="POST"
+                              action="/usuarios/excluir/{{ u[0] }}"
+                              style="display:inline"
+                              onsubmit="return confirm('Confirmar exclusão?')">
+
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
