@@ -1,15 +1,60 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head><meta charset="UTF-8"><title>Login</title></head>
-<body>
-  <h2>Login</h2>
-  {% if erro %}
-    <p style="color:red;">{{ erro }}</p>
-  {% endif %}
-  <form method="POST" action="/login">
-    <label>Usuário: <input type="text" name="username" required></label><br><br>
-    <label>Senha: <input type="password" name="password" required></label><br><br>
-    <button type="submit">Entrar</button>
-  </form>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="col-md-5 col-lg-4">
+
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-4">
+
+                <div class="text-center mb-4">
+                    <div style="font-size: 48px;">🔐</div>
+                    <h3 class="mt-2">Bem-vindo</h3>
+                    <p class="text-muted mb-0">
+                        Acesse o sistema informando suas credenciais
+                    </p>
+                </div>
+
+                {% if erro %}
+                <div class="alert alert-danger">
+                    {{ erro }}
+                </div>
+                {% endif %}
+
+                <form method="POST" action="/login">
+
+                    <div class="mb-3">
+                        <label class="form-label">Usuário</label>
+                        <input type="text"
+                               name="username"
+                               class="form-control"
+                               placeholder="Digite seu usuário"
+                               required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Senha</label>
+                        <input type="password"
+                               name="password"
+                               class="form-control"
+                               placeholder="Digite sua senha"
+                               required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Entrar
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="text-center mt-3 text-muted small">
+            Sistema de Controle de Acesso
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
