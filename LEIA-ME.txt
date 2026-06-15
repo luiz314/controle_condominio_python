@@ -6,4 +6,23 @@ usuário do sistema:
 admin
 123456
 
+conectar o ssh pelo cmd:
+ssh luiz@192.168.x.x
+123456
 
+1. Desabilitar o ClamAV temporariamente
+sudo systemctl stop clamd@scan
+
+2. Garantir que a aplicação Flask está rodando
+
+cd /home/luiz/controle-condominio
+source venv/bin/activate
+python app.py
+
+3. Descobrir o IP da VM
+ip a
+Anota o IP que aparece (algo como 192.168.x.x).
+
+4. Rodar o Nmap — varredura inicial
+De outra máquina na mesma rede (ou da própria VM), rodar:
+nmap -sV -sC --script vuln <IP-da-VM>
