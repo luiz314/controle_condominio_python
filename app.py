@@ -504,6 +504,65 @@ def gerenciar():
             pessoas = cur.fetchall()
     return render_template('gerenciar.html', usuarios=usuarios, pessoas=pessoas)
 
+
+# ================= ROTAS LEGADAS DO GERENCIAR =================
+@app.route('/update_usuario/<int:id>', methods=['POST'])
+def update_usuario_legacy(id):
+    if 'user' not in session:
+        return redirect('/')
+    username = request.form.get('username', '').strip()
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("UPDATE usuarios SET username=%s WHERE id=%s", (username, id))
+        conn.commit()
+    return redirect('/gerenciar')
+
+@app.route('/delete_usuario/<int:id>')
+def delete_usuario_legacy(id):
+    if 'user' not in session:
+        return redirect('/')
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM usuarios WHERE id=%s", (id,))
+        conn.commit()
+    return redirect('/gerenciar')
+
+@app.route('/update_pessoa/<int:id>', methods=['POST'])
+def update_pessoa(id):
+    if 'user' not in session:
+        return redirect('/')
+
+    nome = request.form.get('nome')
+    documento = request.form.get('documento')
+    telefone = request.form.get('telefone')
+
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                UPDATE pessoas
+                   SET nome=%s,
+                       documento=%s,
+                       telefone=%s
+                 WHERE id=%s
+            """, (nome, documento, telefone, id))
+        conn.commit()
+
+    return redirect('/gerenciar')
+
+@app.route('/delete_pessoa/<int:id>')
+def delete_pessoa(id):
+    if 'user' not in session:
+        return redirect('/')
+
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM acessos WHERE pessoa_id=%s", (id,))
+            cur.execute("DELETE FROM pessoas WHERE id=%s", (id,))
+        conn.commit()
+
+    return redirect('/gerenciar')
+
+
 # ================= LOG VIEWER =================
 @app.route('/logs')
 def ver_logs():
